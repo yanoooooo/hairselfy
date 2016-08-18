@@ -1,0 +1,45 @@
+extends layout
+
+block content
+    h1= title
+    p Welcome to #{title}
+    video(id="myVideo" width="500" height="400" autoplay="0")
+    canvas(style="display:none;" width="500" height="400")
+    img(id="test" width="500" height="400" style="background-color:red;")
+
+    script.
+        var socket = io.connect(location.origin);
+
+        navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || window.navigator.mozGetUserMedia;
+        window.URL = window.URL || window.webkitURL;
+
+        var canvas = document.createElement('canvas');
+        var video = document.getElementById('myVideo');
+        var localStream = null;
+        navigator.getUserMedia({video: true, audio: false}, 
+        function(stream) { // for success case
+            console.log(stream);
+            video.src = window.URL.createObjectURL(stream);
+
+            //sendImg
+            //ss(socket).emit('sendImg', ss.createStream(stream));
+            
+            //ss.createBlobReadStream(file).pipe(stream);
+            video.addEventListener('timeupdate', webCameraTimeUpdate);
+            //canvas.getContext('2d').drawImage(video, 0, 0);
+            //var data = canvas.toDataURL();
+            //socket.emit("sendImg", data);
+            //document.getElementById("test").src = data;
+        },
+        function(err) { // for error case
+            console.log(err);
+        });
+        function webCameraTimeUpdate(){
+            // videoタグのキャプチャをcanvasに転写
+            var ctx    = canvas.getContext('2d');
+            ctx.drawImage(video,0,0);
+            // キャンバスの内容をdataURLに変換して、img要素にセット
+            var data = canvas.toDataURL();
+            document.getElementById("test").setAttribute('src', data);
+            socket.emit("sendImg", data);
+        }
