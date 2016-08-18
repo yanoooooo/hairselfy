@@ -2,6 +2,8 @@ doctype html
 html
   head
     title= title
+    script(src="/socket.io/socket.io.js", charset='UTF-8')
+    script(src="/lib/socket.io-stream.js", charset='UTF-8')
     link(rel='stylesheet', href='/css/common.css')
   body
     block content

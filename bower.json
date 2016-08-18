@@ -1,0 +1,22 @@
+{
+  "name": "hairselfy",
+  "description": "",
+  "main": "",
+  "authors": [
+    "aynishim <aynishim@yahoo-corp.jp>"
+  ],
+  "license": "MIT",
+  "moduleType": [],
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "^1.5.8",
+    "bootstrap": "^3.3.7"
+  }
+}

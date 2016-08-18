@@ -21,6 +21,29 @@ app.set('port', port);
 
 var server = http.createServer(app);
 
+//socket.io
+var io = require('socket.io').listen(server);
+var ss = require('socket.io-stream');
+
+io.on('connection', function(socket) {
+  socket.on("sendImg", function(data) {
+        //fs.createReadStream('/path/to/file').pipe(stream);
+        //var filename = path.basename(data.name);
+        //stream.pipe(stream);
+        //console.log(stream);
+        //console.dir(data);
+        socket.broadcast.emit("sendImg", data);
+    });
+  /*ss(socket).on("sendImg", function(stream) {
+        //fs.createReadStream('/path/to/file').pipe(stream);
+        //var filename = path.basename(data.name);
+        //stream.pipe(stream);
+        console.log(stream);
+        //console.dir(data);
+        //ss(socket).broadcast.emit("sendImg", stream);
+    });*/
+});
+
 /**
  * Listen on provided port, on all network interfaces.
  */
