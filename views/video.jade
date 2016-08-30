@@ -17,5 +17,4 @@ block content
             div(id="spVideo")
                 video(width="200" height="200" autoplay)
             | Android
-            div(id="peer-camera" class="camera")
-                video(width="300" height="300" autoplay)
+            canvas(id="hand_tracking" width="300" height="300" ng-init="vm.setCanvas()")
