@@ -1,0 +1,21 @@
+extends layout
+
+block content
+    h1= title
+
+    div(ng-controller="videoCtrl as vm" ng-init="vm.init('#{ua}');")
+        div(ng-if="vm.user_agent=='pc'")
+            | ID : 
+            span#id
+            div(id="pcVideo")
+                video(width="200" height="200" autoplay)
+            div(id="peer-camera" class="camera")
+                video(width="300" height="300" autoplay)
+        div(ng-if="vm.user_agent=='sp'")
+            input(type="text" ng-model="vm.peer_id" name="peer_id" id="peer_id" placeholder="Peer ID")
+            button(id="login" ng-click="vm.login()") login
+            div(id="spVideo")
+                video(width="200" height="200" autoplay)
+            | Android
+            div(id="peer-camera" class="camera")
+                video(width="300" height="300" autoplay)

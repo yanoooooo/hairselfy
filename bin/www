@@ -22,7 +22,7 @@ app.set('port', port);
 var server = http.createServer(app);
 
 //socket.io
-var io = require('socket.io').listen(server);
+/*var io = require('socket.io').listen(server);
 var ss = require('socket.io-stream');
 
 io.on('connection', function(socket) {
@@ -41,8 +41,8 @@ io.on('connection', function(socket) {
         console.log(stream);
         //console.dir(data);
         //ss(socket).broadcast.emit("sendImg", stream);
-    });*/
-});
+    });
+});*/
 
 /**
  * Listen on provided port, on all network interfaces.
