@@ -1,41 +1,27 @@
 extends layout
 
 block content
-    h1= title
-    p Welcome to #{title}
-
-    div(id="peer-camera" class="camera")
-        video(width="300" height="300" autoplay)
-    div(id="pcVideo" width="400" height="300")
-        video(width="300" height="300" autoplay)
-    button(id="call") Call
-
-    //video(id="myVideo" width="400" height="300" autoplay="0")
-    //video(id="spVideo" width="400" height="300" autoplay="0")
-    //img(id="test" width="500" height="400" style="background-color:red;")
-
-    //script.
-        var socket = io.connect(location.origin);
-        navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || window.navigator.mozGetUserMedia;
-        window.URL = window.URL || window.webkitURL;
-
-        var video = document.getElementById('myVideo');
-        var video2 = document.getElementById('spVideo');
-        var localStream = null;
-        navigator.getUserMedia({video: true, audio: false}, 
-        function(stream) { // for success case
-            //console.log(stream);
-            video.src = window.URL.createObjectURL(stream);
-            //ss(socket).on("sendImg",function(data){
-        },
-        function(err) { // for error case
-            console.log(err);
-        });
-
-        socket.on("sendImg",function(data){
-            //console.log(data);
-            //video2.src = window.URL.createObjectURL(data);
-            console.log(video2.src);
-            document.getElementById("test").setAttribute('src', data);
-            //console.log(data);
-        });
+    #above
+        h1= title
+        p 1. Please click a hair style icon
+        #hair_styles
+            .row
+                .col-sm-3.hair
+                    img
+                    br
+                    | twist
+                .col-sm-3.hair
+                    img
+                    br
+                    | braid
+                .col-sm-3.hair
+                    img
+                    br
+                    | French braid
+                .col-sm-3.hair
+                    img
+                    br
+                    | tie
+    #bottom
+        p 2. aaaaaaaaaaaaaaaaaaaaaaaaaaa
+        button(type="button" class="btn btn-danger") Submit
