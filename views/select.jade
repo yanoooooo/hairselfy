@@ -1,0 +1,24 @@
+extends layout
+
+block content
+    #select(ng-controller="selectCtrl as vm" ng-init="vm.init('#{mode}');")
+        #above
+            h1= title
+            p 1. Please click a hair style icon.
+            .hair_styles
+                .row
+                    .col-sm-3.hair(ng-repeat="data in vm.hair_datas")
+                        img(ng-src="{{data.src}}" ng-click="vm.selected($index)")
+                        br
+                        | {{data.name}}
+        #bottom
+            p 2. Your selected style.
+            .hair_styles
+                .row
+                    .col-sm-3.hair(ng-repeat="data in vm.select_datas")
+                        img(ng-src="{{data.src}}")
+                        br
+                        | {{data.name}}
+            form(action="/guideline" method="POST")
+                input(type="hidden" name="datas" value="{{vm.select_datas}}")
+                button(type="button submit" class="btn") Starting?

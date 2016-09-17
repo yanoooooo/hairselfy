@@ -1,27 +1,17 @@
 extends layout
 
 block content
-    #above
-        h1= title
-        p 1. Please click a hair style icon
-        #hair_styles
-            .row
-                .col-sm-3.hair
-                    img
-                    br
-                    | twist
-                .col-sm-3.hair
-                    img
-                    br
-                    | braid
-                .col-sm-3.hair
-                    img
-                    br
-                    | French braid
-                .col-sm-3.hair
-                    img
-                    br
-                    | tie
-    #bottom
-        p 2. aaaaaaaaaaaaaaaaaaaaaaaaaaa
-        button(type="button" class="btn btn-danger") Submit
+    #index
+        h1 hair selfy
+        p ヘアアレンジのモードを選択してください
+        .row
+            .col-sm-6.hair
+                a(href="/select?mode=free")
+                    img(src="img/index/free.png")
+                br
+                | 自由モード
+            .col-sm-6.hair
+                a(href="/select?mode=template")
+                    img(src="img/index/template.png")
+                br
+                | 雛形モード

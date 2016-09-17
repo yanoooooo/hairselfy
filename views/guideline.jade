@@ -1,0 +1,21 @@
+extends layout
+
+block content
+    div(id="guideline" ng-controller="guidelineCtrl as vm" ng-init="vm.init('#{ua}','#{room_id}', '#{datas}');")
+        #pc.row(ng-if="vm.user_agent=='pc'")
+            #left.col-sm-3
+                .process(ng-repeat="data in vm.select_datas")
+                    img(ng-src="{{data.src}}")
+                    .arrow(ng-show="!$last")
+            #right.col-sm-9
+                br
+                | ID : 
+                span#id
+                div(id="pcVideo")
+                    video(width="200" height="200" autoplay)
+                div(id="peer-camera" class="camera")
+                    video(width="300" height="300" autoplay)
+        div(id="sp" ng-if="vm.user_agent=='sp'")
+            //button(id="login" ng-click="vm.connect()") Connect
+            div(id="spVideo")
+                video(autoplay)
