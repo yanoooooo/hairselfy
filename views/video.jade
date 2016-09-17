@@ -3,7 +3,7 @@ extends layout
 block content
     h1= title
 
-    div(ng-controller="videoCtrl as vm" ng-init="vm.init('#{ua}');")
+    div(ng-controller="videoCtrl as vm" ng-init="vm.init('#{ua}','#{room_id}');")
         div(ng-if="vm.user_agent=='pc'")
             | ID : 
             span#id
@@ -12,9 +12,10 @@ block content
             div(id="peer-camera" class="camera")
                 video(width="300" height="300" autoplay)
         div(ng-if="vm.user_agent=='sp'")
-            input(type="text" ng-model="vm.peer_id" name="peer_id" id="peer_id" placeholder="Peer ID")
-            button(id="login" ng-click="vm.login()") login
+            //input(type="text" ng-model="vm.peer_id" name="peer_id" id="peer_id" placeholder="Peer ID")
+            //button(id="login" ng-click="vm.login('#{room_id}')") login
+            //button(id="login" ng-click="vm.connect()") Connect
             div(id="spVideo")
                 video(width="200" height="200" autoplay)
-            | Android
+            | {{vm.test}}
             canvas(id="hand_tracking" width="300" height="300" ng-init="vm.setCanvas()")
