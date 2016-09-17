@@ -1,12 +1,16 @@
-angular.module("hairselfy").controller('videoCtrl', function videoCtrl() {
+angular.module("hairselfy").controller('videoCtrl', function videoCtrl($scope) {
   var vm = this;
   vm.user_agent = "pc";
   vm.peer_id = "";
   //var messages = [];
   //var peer_id, name, conn;
 
+  vm.connect = function() {
+    //android.rotServo("Hello Android");
+  };
+
   var peer = new Peer({
-    host: 'localhost',
+    host: '192.168.108.239',
     port: 9000,
     path: '/peerjs',
     debug: 3,
@@ -26,7 +30,6 @@ angular.module("hairselfy").controller('videoCtrl', function videoCtrl() {
   }
 
   function onReceiveCall(call){
-    console.log("through");
     call.answer(window.localStream);
     call.on('stream', function(stream){
       window.peer_stream = stream;
@@ -41,7 +44,7 @@ angular.module("hairselfy").controller('videoCtrl', function videoCtrl() {
     
     requestAnimationFrame( function() { return that.HandTraking(); } );
     
-    console.dir(hand_video);
+    //console.dir(hand_video);
     if (hand_video.readyState === hand_video.HAVE_ENOUGH_DATA){
       image = snapshot(hand_video);
       
@@ -134,11 +137,19 @@ angular.module("hairselfy").controller('videoCtrl', function videoCtrl() {
     return imageDst;
   };*/
 
-  vm.init = function(ua) {
+  vm.init = function(ua, peer_id) {
     if (ua.indexOf('Android') > 0) {
       vm.user_agent = "sp";
+      vm.peer_id = peer_id;
       vm.tracker = new HT.Tracker();
     }
+
+    //spの場合、自動で通信開始
+    setTimeout(function() {
+      if(vm.peer_id !== undefined && vm.user_agent == "sp") {
+        vm.login();
+      }
+    }, 3000);
 
     peer.on('open', function(){
       angular.element('#id').text(peer.id);
@@ -149,7 +160,7 @@ angular.module("hairselfy").controller('videoCtrl', function videoCtrl() {
     //pc video setting
     function getVideo(callback){
       navigator.getUserMedia({audio: false, video: true}, callback, function(error){
-        console.log(error);
+        //console.log(error);
         alert('An error occured. Please try again');
       });
     }
