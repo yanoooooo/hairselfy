@@ -12,6 +12,7 @@
             .process {
                 margin: 3% 0 0 0;
                 text-align: center;
+                color: $text;
                 img {
                     margin-bottom: 5%;
                 }
@@ -19,8 +20,8 @@
                     margin: auto auto;
                     width: 0;
                     height: 0;
-                    border: 30px solid transparent;
-                    border-top: 30px solid #ffffff;
+                    border: 20px solid transparent;
+                    border-top: 20px solid #ffffff;
                 }
             }
         }
@@ -32,10 +33,16 @@
                 width: 98%;
                 height: 80%;
                 #peer-camera {
+                    position:relative;
                     height: 100%;
                     video {
                         height: 100%;
                         -webkit-transform: scaleX(-1);
+                    }
+                    #draw_guide {
+                        position:absolute;
+                        top:0;
+                        left:0;
                     }
                 }
                 #pcVideo {

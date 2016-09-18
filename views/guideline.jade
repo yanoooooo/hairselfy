@@ -4,9 +4,12 @@ block content
     div(id="guideline" ng-controller="guidelineCtrl as vm" ng-init="vm.init('#{ua}','#{room_id}', '#{datas}');")
         #pc.row(ng-if="vm.user_agent=='pc'")
             #left.col-sm-3
-                .process(ng-repeat="data in vm.select_datas")
-                    img(ng-src="{{data.src}}")
-                    .arrow(ng-show="!$last")
+                .process(ng-repeat="process in vm.process_datas")
+                    div(ng-repeat="data in process")
+                        img(ng-src="{{data.src}}")
+                        br
+                        | {{data.text}}
+                        .arrow(ng-show="!$last")
             #right.col-sm-9
                 br
                 | ID :
@@ -18,6 +21,7 @@ block content
                         .col-md-5(style="height:100%;")
                             #peer-camera.camera
                                 video(autoplay)
+                                canvas(id="draw_guide")
                         .col-md-7(style="height:100%;")
                             #pcVideo
                                 video(autoplay)
@@ -26,7 +30,8 @@ block content
                                 center
                                     input(class="form-control" type="text" placeholder="Input Angle of rotation" id="example-text-input" ng-model="vm.rot_data" ng-pattern="/^(0|[1-9][0-9]*)$/")
                                 br
-                                button(type="button" class="btn" ng-click="vm.sendServo()" ng-disabled="!vm.rot_data") Submit
+                                button(type="button" class="btn" ng-click="vm.sendServo()" ng-disabled="!vm.rot_data") Send
+                                button(type="button" class="btn" ng-click="vm.draw()") draw
         div(id="sp" ng-if="vm.user_agent=='sp'")
             //button(id="login" ng-click="vm.connect()") Connect
             div(id="spVideo")

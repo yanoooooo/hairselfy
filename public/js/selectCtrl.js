@@ -1,16 +1,7 @@
-angular.module("hairselfy").controller('selectCtrl', function selectCtrl($location) {
+angular.module("hairselfy").controller('selectCtrl', function selectCtrl(common) {
     var vm = this;
-    var free_datas = [
-        {name: "first style", src:"img/select/template01.png"},
-        {name: "seconde style", src:"img/select/template01.png"},
-        {name: "third style", src:"img/select/template01.png"},
-        {name: "fourth style", src:"img/select/template01.png"}
-    ];
-    var template_datas = [
-        {name: "Twist", src:"img/select/twist.png"},
-        {name: "French", src:"img/select/french.png"},
-        {name: "Breid", src:"img/select/breid.png"}
-    ];
+    var free_datas = common.free_datas;
+    var template_datas = common.template_datas;
 
     vm.init = function(mode) {
         vm.hair_datas = [];
