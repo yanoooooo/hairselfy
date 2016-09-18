@@ -1,6 +1,7 @@
-angular.module("hairselfy").controller('guidelineCtrl', function guidelineCtrl() {
+angular.module("hairselfy").controller('guidelineCtrl', function guidelineCtrl(common, guidelinePrvd) {
   var vm = this;
   var conn;
+  var process_datas = common.process;
   var peer = new Peer({
     host: '192.168.108.239',
     port: 9000,
@@ -14,14 +15,34 @@ angular.module("hairselfy").controller('guidelineCtrl', function guidelineCtrl()
     ]}
   });
 
+  vm.draw = function() {
+    var canvas = document.getElementById("draw_guide");
+    //var ctx = canvas.getContext('2d');
+    //console.log(ctx);
+    //ctx.beginPath();
+    //ctx.fillRect(20, 20, 80, 40);
+    /*********** 本当はandroidからアクセスがあった時に表示 ****************/
+    var w = $('#peer-camera').width();
+    var h = $('#peer-camera').height();
+    $('#draw_guide').attr('width', w);
+    $('#draw_guide').attr('height', h);
+    guidelinePrvd.processController(canvas, vm.process_datas);
+  };
+
   vm.init = function(ua, peer_id, datas) {
     vm.user_agent = "pc";
     vm.peer_id = "";
     vm.rot_data = 0;
-    vm.select_datas = [];
+    vm.process_datas = [];
+
+    //existing selected data
     if(datas.length > 0) {
-      vm.select_datas = JSON.parse(datas);
+      var select_datas = JSON.parse(datas);
+      for(var i=0; i<select_datas.length; i++) {
+        vm.process_datas.push(process_datas[select_datas[i].name]);
+      }
     }
+
     //console.log(peer_id);
     if (ua.indexOf('Android') > 0) {
       vm.user_agent = "sp";
@@ -71,7 +92,6 @@ angular.module("hairselfy").controller('guidelineCtrl', function guidelineCtrl()
 
   vm.sendServo = function() {
     var data = vm.rot_data;
-    console.log("sending....");
     conn.send(data);
     handleMessage(data);
   };
