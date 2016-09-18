@@ -24,9 +24,9 @@ block content
                             #servo
                                 p Servo Controller
                                 center
-                                    input(class="form-control" type="text" placeholder="Input Angle of rotation" id="example-text-input" ng-model="vm.rot_data")
+                                    input(class="form-control" type="text" placeholder="Input Angle of rotation" id="example-text-input" ng-model="vm.rot_data" ng-pattern="/^([1-9][0-9]*)$/")
                                 br
-                                button(type="button" class="btn" ng-click="vm.sendServo()") Submit
+                                button(type="button" class="btn" ng-click="vm.sendServo()" ng-disabled="!vm.rot_data") Submit
         div(id="sp" ng-if="vm.user_agent=='sp'")
             //button(id="login" ng-click="vm.connect()") Connect
             div(id="spVideo")
