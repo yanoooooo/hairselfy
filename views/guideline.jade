@@ -9,12 +9,24 @@ block content
                     .arrow(ng-show="!$last")
             #right.col-sm-9
                 br
-                | ID : 
+                | ID :
                 span#id
-                div(id="pcVideo")
-                    video(width="200" height="200" autoplay)
-                div(id="peer-camera" class="camera")
-                    video(width="300" height="300" autoplay)
+                br
+                br
+                #display
+                    .row(style="height:100%;")
+                        .col-md-5(style="height:100%;")
+                            #peer-camera.camera
+                                video(autoplay)
+                        .col-md-7(style="height:100%;")
+                            #pcVideo
+                                video(autoplay)
+                            #servo
+                                p Servo Controller
+                                center
+                                    input(class="form-control" type="text" placeholder="Input Angle of rotation" id="example-text-input" ng-model="vm.rot_data")
+                                br
+                                button(type="button" class="btn" ng-click="vm.sendServo()") Submit
         div(id="sp" ng-if="vm.user_agent=='sp'")
             //button(id="login" ng-click="vm.connect()") Connect
             div(id="spVideo")
