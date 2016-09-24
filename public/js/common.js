@@ -12,7 +12,14 @@ angular.module("hairselfy", []).value(
             {name: "Braid", src:"img/select/braid.png"}
         ],
         'process': {
-            'Twist':[],
+            'Twist':[
+                {src:'img/process/twist/twist1.png', text:'', guide: 'Divide', camera:'back'},
+                {src:'img/process/twist/twist2.png', text:'', guide: 'Twist', camera:'back'},
+                {src:'img/process/twist/twist3.png', text:'', guide: 'Tie', camera:'back'},
+                {src:'img/process/twist/twist4.png', text:'', guide: 'Pause', camera:'back'},
+                {src:'img/process/twist/twist5.png', text:'', guide: 'Turn', camera:'back'},
+                {src:'img/process/twist/twist6.png', text:'', guide: 'Pause', camera:'back'}
+            ],
             'French':[],
             'Braid':[
                 {src:'img/process/braid/braid1.png', text:'髪の毛を右側に寄せます', guide: "Gather", camera: "back"},
@@ -30,9 +37,9 @@ angular.module("hairselfy", []).value(
             'Tie': {position: 'bottom'}
         },
         'camera': {
-            'right': {rot:180, src: 'img/guide/face/face_right.png'},
-            'back': {rot:100, src: 'img/guide/face/face_back.png'},
-            'left': {rot:10, src: 'img/guide/face/face_left.png'},
+            'right': {rot:0, src: 'img/guide/face/face_right.png'},
+            'back': {rot:80, src: 'img/guide/face/face_back.png'},
+            'left': {rot:150, src: 'img/guide/face/face_left.png'},
             'front': {rot:0, src: 'img/guide/face/face_front.png'}
         },
         'img_path': {

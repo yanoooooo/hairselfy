@@ -6,12 +6,12 @@ block content
             #left.col-sm-3
                 .process(ng-repeat="process in vm.process_datas")
                     div(ng-repeat="data in process")
-                        img(ng-src="{{data.src}}")
+                        img(ng-src="{{data.src}}" id="icon_{{$parent.$index}}_{{$index}}")
                         //br
                         //| {{data.text}}
                         .arrow
                     div
-                        img(ng-src="img/guide/finish/finish_icon.png")
+                        img(ng-src="img/guide/finish/finish_icon.png" id="icon_finish")
             #right.col-sm-9
                 br
                 | ID :
