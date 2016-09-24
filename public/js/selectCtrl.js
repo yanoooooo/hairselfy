@@ -2,8 +2,10 @@ angular.module("hairselfy").controller('selectCtrl', function selectCtrl(common)
     var vm = this;
     var free_datas = common.free_datas;
     var template_datas = common.template_datas;
-
+    
     vm.init = function(mode) {
+        vm.process_datas = common.process;
+        vm.guide_datas = common.guide;
         vm.hair_datas = [];
         vm.select_datas = [];
         vm.max_select = 0;

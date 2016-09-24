@@ -35,7 +35,7 @@ angular.module("hairselfy").provider('guidelinePrvd', function() {
                 swap_color[0] = swap_color[1];
                 swap_color[1] = swap_color[2];
                 swap_color[2] = old;
-                console.dir(swap_color);
+                //console.dir(swap_color);
             }
 
             if(method === 0) {

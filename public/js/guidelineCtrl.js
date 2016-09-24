@@ -1,10 +1,11 @@
-angular.module("hairselfy").controller('guidelineCtrl', function guidelineCtrl(common, guidelinePrvd, $timeout) {
+angular.module("hairselfy").controller('guidelineCtrl', function guidelineCtrl(common, guidelinePrvd, $timeout, $location, $anchorScroll) {
   var vm = this;
   var interval = 10000;
   var conn;
   var process_datas = common.process;
   var guide_datas = common.guide;
   var camera_datas = common.camera;
+  var pc_debug = true;
   var peer = new Peer({
     host: '192.168.108.239',
     port: 9000,
@@ -56,15 +57,35 @@ angular.module("hairselfy").controller('guidelineCtrl', function guidelineCtrl(c
 
   vm.proccessCtrl = function(canvas, ctx, data, process_num) {
     var guide_num = 0;
+
     if(process_num < data.length) {
       vm.guideCtrl(canvas, ctx, data, guide_num, process_num);
     } else {
       console.log("finish");
+      vm.changeIconCss(process_num-1, data[process_num-1].length);
+      angular.element("#icon_finish").css({'border':'solid 2px red', 'border-radius': '10px'});
       guidelinePrvd.drawFinish(canvas, ctx);
     }
   };
 
+  vm.changeIconCss = function(process_num, guide_num) {
+    //渡されたguide_num以前の枠を消す
+    if(guide_num > 0) {
+      var id = "#icon_"+process_num+"_"+String(guide_num-1);
+      angular.element(id).css('border', '');
+    }
+    
+    //渡されたguide_numに赤い枠と自動スクロール
+    angular.element("#icon_"+process_num+"_"+guide_num).css({'border':'solid 2px red', 'border-radius': '10px'});
+    $location.hash("icon_"+process_num+"_"+guide_num);
+    // call $anchorScroll()
+    $anchorScroll();
+  };
+
   vm.guideCtrl = function(canvas, ctx, data, guide_num, process_num) {
+    //create style
+    vm.changeIconCss(process_num, guide_num);
+
     //console.log(data[process_num][guide_num]);
     var ani_canvas = document.getElementById("animation");
     if ( !ani_canvas || ! ani_canvas.getContext ) { return false; }
@@ -76,9 +97,12 @@ angular.module("hairselfy").controller('guidelineCtrl', function guidelineCtrl(c
     guidelinePrvd.drawText(canvas, ctx, data[process_num][guide_num].text);
 
     //moving camera
-    //var rot = camera_datas[data[process_num][guide_num].camera];
-    //conn.send(rot);
-    //handleMessage(rot);
+    if(!pc_debug) {
+      var rot = camera_datas[data[process_num][guide_num].camera].rot;
+      console.log(rot);
+      conn.send(rot);
+      handleMessage(rot);
+    }
     
     switch(data[process_num][guide_num].guide) {
       case "Twist":
@@ -124,6 +148,7 @@ angular.module("hairselfy").controller('guidelineCtrl', function guidelineCtrl(c
     vm.peer_id = "";
     vm.rot_data = 0;
     vm.process_datas = [];
+    vm.icon_style = [];
 
     //existing selected data
     if(datas.length > 0) {
@@ -198,7 +223,7 @@ angular.module("hairselfy").controller('guidelineCtrl', function guidelineCtrl(c
     call.on('stream', function(stream){
       window.peer_stream = stream;
       onReceiveStream(stream, 'peer-camera');
-      vm.draw();
+      //vm.draw();
     });
   }
 
