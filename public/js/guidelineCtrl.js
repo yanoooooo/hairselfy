@@ -1,9 +1,9 @@
+//渡されたヘアアレンジの種類とパラメータを描画する
 angular.module("hairselfy").controller('guidelineCtrl', function guidelineCtrl(common, guidelinePrvd, $timeout, $location, $anchorScroll) {
   var vm = this;
-  var interval = 10000;
+  var interval = 1000;
   var conn;
-  var process_datas = common.process;
-  var guide_datas = common.guide;
+  var process_datas = [];
   var camera_datas = common.camera;
   var pc_debug = true;
   var peer = new Peer({
@@ -33,26 +33,6 @@ angular.module("hairselfy").controller('guidelineCtrl', function guidelineCtrl(c
     if ( !canvas || ! canvas.getContext ) { return false; }
     var ctx = canvas.getContext('2d');
     vm.proccessCtrl(canvas, ctx, data, 0);
-
-    /*var process_num = 0;
-    var guide_num = 0;
-    while(process_num < data.length) {
-      while(guide_num < data[process_num].length) {
-        guidelinePrvd.drawFaceGuide(canvas, ctx, data[process_num][guide_num].camera);
-        
-        Sleep(3);
-        console.log("throgh");
-        guide_num++;
-      }
-      Sleep(3);
-      console.log("throgh!!!!");
-      process_num++;
-    }*/
-    //var ctx = canvas.getContext('2d');
-    //console.log(ctx);
-    //ctx.beginPath();
-    //ctx.fillRect(20, 20, 80, 40);
-    //guidelinePrvd.processController(canvas, vm.process_datas);
   };
 
   vm.proccessCtrl = function(canvas, ctx, data, process_num) {
@@ -105,21 +85,25 @@ angular.module("hairselfy").controller('guidelineCtrl', function guidelineCtrl(c
     }
     
     switch(data[process_num][guide_num].guide) {
+      case "Turn":
+        promise = guidelinePrvd.drawTurn(ani_canvas, ani_ctx, data[process_num][guide_num].parameter);
+        break;
       case "Twist":
+        promise = guidelinePrvd.drawTwist(ani_canvas, ani_ctx, data[process_num][guide_num].parameter);
         break;
       case "French":
         break;
       case "Braid":
-        promise = guidelinePrvd.drawBraid(ani_canvas, ani_ctx, guide_datas.Braid);
+        promise = guidelinePrvd.drawBraid(ani_canvas, ani_ctx, data[process_num][guide_num].parameter);
         break;
       case "Gather":
-        promise = guidelinePrvd.drawGather(canvas, ctx, guide_datas.Gather);
+        promise = guidelinePrvd.drawGather(canvas, ctx, data[process_num][guide_num].parameter);
         break;
       case "Divide":
-        promise = guidelinePrvd.drawDivide(canvas, ctx, guide_datas.Divide);
+        promise = guidelinePrvd.drawDivide(canvas, ctx, data[process_num][guide_num].parameter);
         break;
       case "Tie":
-        promise = guidelinePrvd.drawTie(canvas, ctx, guide_datas.Tie);
+        promise = guidelinePrvd.drawTie(canvas, ctx, data[process_num][guide_num].parameter);
         break;
       default:
         break;
@@ -153,8 +137,8 @@ angular.module("hairselfy").controller('guidelineCtrl', function guidelineCtrl(c
     //existing selected data
     if(datas.length > 0) {
       var select_datas = JSON.parse(datas);
-      for(var i=0; i<select_datas.length; i++) {
-        vm.process_datas.push(process_datas[select_datas[i].name]);
+      for(var i=0; i<select_datas.select.length; i++) {
+        vm.process_datas = select_datas.process;
       }
     }
 
