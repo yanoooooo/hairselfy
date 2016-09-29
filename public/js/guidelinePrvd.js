@@ -1,7 +1,7 @@
 angular.module("hairselfy").provider('guidelinePrvd', function() {
     var vm = this;
     var canvas, ctx;
-    var interval = 10000;
+    var interval = 1000;
     var camera_data, img_path;
     var colors = [
         "rgba(255, 184, 213, 0.7)",
@@ -108,6 +108,44 @@ angular.module("hairselfy").provider('guidelinePrvd', function() {
             }
         }
 
+        function methodDivide(canvas, ctx, data, hand_path) {
+            // num: 0, 1, 2, center, dist, thickness
+            var deferred = $q.defer();
+            var img = new Image();
+            var thickness = 25 * data.thickness;
+            var start_vertex = data.center-(data.num-1)*thickness;
+
+            //draw hand
+            img.onload = function onImageLoad() {
+                if(data.num > 2) {
+                    ctx.drawImage(img, 30, canvas.height/3*2, canvas.width+30, canvas.height/3);
+                } else {
+                    ctx.drawImage(img, 0, canvas.height/5*3, canvas.width, canvas.height/4);
+                }
+                deferred.resolve(true);
+            };
+            img.onerror = function() {
+                deferred.reject(false);
+            };
+
+            img.src = hand_path;
+
+            for(var i=0; i<data.num; i++) {
+                ctx.fillStyle = colors[i];
+                ctx.beginPath();
+                ctx.moveTo(start_vertex+(i*thickness*2)+(i*data.dist),500);
+                ctx.lineTo(start_vertex+thickness+(i*thickness*2)+(i*data.dist),100);
+                ctx.lineTo(start_vertex-thickness+(i*thickness*2)+(i*data.dist),100);
+                //console.log(start_vertex+(i*thickness*2)+(i*data.dist), start_vertex+thickness+(i*thickness*2)+(i*data.dist), start_vertex-thickness+(i*thickness*2)+(i*data.dist));
+                /*ctx.moveTo(200+(i*50),500);
+                ctx.lineTo(225+(i*50),100);
+                ctx.lineTo(175+(i*50),100);*/
+                ctx.closePath();
+                ctx.fill();
+            }
+            return deferred.promise;
+        }
+
         return {
             drawFaceGuide:function(canvas, ctx, camera) {
                 var img = new Image();
@@ -121,6 +159,63 @@ angular.module("hairselfy").provider('guidelinePrvd', function() {
                 /* 青色でstrokText */
                 ctx.fillStyle = "rgb(254, 168, 126)";
                 ctx.fillText(text, 30, 25);
+            },
+            drawTurn: function(canvas, ctx, data) {
+                var deferred = $q.defer();
+                ctx.fillStyle = colors[0];
+                ctx.beginPath();
+                ctx.moveTo(canvas.width/2+50, 400);
+                ctx.lineTo(95, 100);
+                ctx.lineTo(50, 100);
+                ctx.closePath();
+                ctx.fill();
+
+                ctx.fillStyle = colors[1];
+                ctx.beginPath();
+                ctx.moveTo(canvas.width/2-50, 400);
+                ctx.lineTo(350, 100);
+                ctx.lineTo(305, 100);
+                ctx.closePath();
+                ctx.fill();
+
+                var img = new Image();
+                img.onload = function onImageLoad() {
+                    ctx.drawImage(img, canvas.width/3, canvas.height/2, 380/2, 141/2);
+                };
+                img.src = img_path.Turn.hand;
+
+                var img_arrow = new Image();
+                img_arrow.onload = function onImageLoad() {
+                    ctx.drawImage(img_arrow, canvas.width/2-20, canvas.height/3, 117, 90);
+                    deferred.resolve(true);
+                };
+                img_arrow.onerror = function() {
+                    deferred.reject(false);
+                };
+
+                img_arrow.src = img_path.Turn.arrow;
+
+                return deferred.promise;
+            },
+            drawTwist: function(canvas, ctx, data) {
+                var deferred = $q.defer();
+                var divide_promise = methodDivide(canvas, ctx, data, img_path.Twist.hand);
+                divide_promise.then(function(response){
+                    var img = new Image();
+
+                    img.onload = function onImageLoad() {
+                        ctx.drawImage(img, 0, canvas.height/3, canvas.width, canvas.height/3);
+                        deferred.resolve(true);
+                    };
+                    img.onerror = function() {
+                        deferred.reject(false);
+                    };
+
+                    img.src = img_path.Twist.arrow;
+                }, function(response) {
+                    console.log("error!");
+                });
+                return deferred.promise;
             },
             drawBraid: function(canvas, ctx, data) {
                 //thickness, heigh, hardness
@@ -148,36 +243,22 @@ angular.module("hairselfy").provider('guidelinePrvd', function() {
                 return deferred.promise;
             },
             drawDivide: function(canvas, ctx, data) {
-                // num: 0, 1, 2
-                var deferred = $q.defer();
-                var img = new Image();
-                //draw hand
-                img.onload = function onImageLoad() {
-                    ctx.drawImage(img, 30, canvas.height/3*2, canvas.width+30, canvas.height/3);
-                    deferred.resolve(true);
-                };
-                img.onerror = function() {
-                    deferred.reject(false);
-                };
-                img.src = img_path.Divide.hand;
-
-                for(var i=0; i<data.num; i++) {
-                    ctx.fillStyle = colors[i];
-                    ctx.beginPath();
-                    ctx.moveTo(200+(i*50),500);
-                    //座標を指定してラインを引いていく
-                    ctx.lineTo(225+(i*50),100);
-                    ctx.lineTo(175+(i*50),100);
-                    ctx.closePath();
-                    ctx.fill();
+                // num: 0, 1, 2, center, dist, thickness
+                var path = "";
+                if(data.num > 2) {
+                    path = img_path.Divide.hand_many;
+                } else {
+                    path = img_path.Divide.hand_less;
                 }
-                return deferred.promise;
+                var promise = methodDivide(canvas, ctx, data, path);
+                return promise;
             },
             drawTie: function(canvas, ctx, data) {
                 // position
                 var deferred = $q.defer();
+                var hand_position = {};
                 var img = new Image();
-                if(data.position == "bottom") {
+                if(data.num == 1) {
                     ctx.fillStyle = colors[0];
                     ctx.beginPath();
                     ctx.moveTo(250, 600);
@@ -186,16 +267,44 @@ angular.module("hairselfy").provider('guidelinePrvd', function() {
                     ctx.closePath();
                     ctx.fill();
 
-                    //draw hand
-                    img.onload = function onImageLoad() {
-                        ctx.drawImage(img, 30, canvas.height/3*2, canvas.width+30, canvas.height/3);
-                        deferred.resolve(true);
-                    };
-                    img.onerror = function() {
-                        deferred.reject(false);
-                    };
-                    img.src = img_path.Tie.hand;
+                    hand_position.x = 30;
+                    hand_position.width = canvas.width+30;
+                } else if(data.num == 2) {
+                    ctx.fillStyle = colors[0];
+                    ctx.beginPath();
+                    ctx.moveTo(canvas.width/2+50, 400);
+                    ctx.lineTo(95, 100);
+                    ctx.lineTo(50, 100);
+                    ctx.closePath();
+                    ctx.fill();
+
+                    ctx.fillStyle = colors[1];
+                    ctx.beginPath();
+                    ctx.moveTo(canvas.width/2-50, 400);
+                    ctx.lineTo(350, 100);
+                    ctx.lineTo(305, 100);
+                    ctx.closePath();
+                    ctx.fill();
+
+                    hand_position.x = 0;
+                    hand_position.width = canvas.width;
                 }
+                if(data.position == "bottom") {
+                    hand_position.y = canvas.height/3*2;
+                    hand_position.height = canvas.height/3;
+                } else if(data.position == "above") {
+                    hand_position.y = canvas.height/3;
+                    hand_position.height = canvas.height/3;
+                }
+                //draw hand
+                img.onload = function onImageLoad() {
+                    ctx.drawImage(img, hand_position.x, hand_position.y, hand_position.width, hand_position.height);
+                    deferred.resolve(true);
+                };
+                img.onerror = function() {
+                    deferred.reject(false);
+                };
+                img.src = img_path.Tie.hand;
                 return deferred.promise;
             },
             drawFinish: function(canvas, ctx) {
