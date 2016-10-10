@@ -16,14 +16,194 @@ angular.module("hairselfy").provider('guidelinePrvd', function() {
         camera_data = common.camera;
         img_path = common.img_path;
 
+        function methodFrench(canvas, ctx, num, data, max, deferred) {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            var i = 0;
+            var method = num%5;
+            var img = new Image();
+            var vertex = 500 + num * 12;
+            var base = 100 + num * 12;
+            img.onload = function onImageLoad() {
+                ctx.drawImage(img, 30, canvas.height/3*2, canvas.width+30, canvas.height/3);
+            };
+            img.src = img_path.French.hand[method];
+
+            //swap colors
+            if(num%5 === 0 && num !== 0) {
+                var old = swap_color[0];
+                swap_color[0] = swap_color[1];
+                swap_color[1] = swap_color[2];
+                swap_color[2] = old;
+                //console.dir(swap_color);
+            }
+
+            if(method === 0) {
+                for(i=0; i<3; i++) {
+                    ctx.fillStyle = swap_color[i];
+                    ctx.beginPath();
+                    ctx.moveTo(200+(i*50),vertex);
+                    //座標を指定してラインを引いていく
+                    ctx.lineTo(225+(i*50),base);
+                    ctx.lineTo(175+(i*50),base);
+                    ctx.closePath();
+                    ctx.fill();
+                }
+            } else if(method === 1) {
+                for(i=0; i<3; i++) {
+                    ctx.fillStyle = swap_color[i];
+                    ctx.beginPath();
+                    ctx.moveTo(200+(i*50),vertex);
+                    //座標を指定してラインを引いていく
+                    ctx.lineTo(225+(i*50),base);
+                    ctx.lineTo(175+(i*50),base);
+                    ctx.closePath();
+                    ctx.fill();
+                }
+
+                //すくう髪
+                ctx.fillStyle = swap_color[3];
+                ctx.beginPath();
+                ctx.moveTo(160,vertex);
+                ctx.lineTo(175,base);
+                ctx.lineTo(145,base);
+                ctx.closePath();
+                ctx.fill();
+            } else if(method === 2) {
+                ctx.fillStyle = swap_color[2];
+                ctx.beginPath();
+                ctx.moveTo(200+(2*50),vertex);
+                ctx.lineTo(225+(2*50),base);
+                ctx.lineTo(175+(2*50),base);
+                ctx.closePath();
+                ctx.fill();
+
+                ctx.fillStyle = swap_color[1];
+                ctx.beginPath();
+                ctx.moveTo(200+(-1*50),vertex);
+                ctx.lineTo(225+(1*50),base);
+                ctx.lineTo(175+(1*50),base);
+                ctx.closePath();
+                ctx.fill();
+
+                ctx.fillStyle = swap_color[0];
+                ctx.beginPath();
+                ctx.moveTo(350,vertex);
+                ctx.lineTo(225,base);
+                ctx.lineTo(175,base);
+                ctx.closePath();
+                ctx.fill();
+
+                //すくう髪
+                ctx.fillStyle = swap_color[3];
+                ctx.beginPath();
+                ctx.moveTo(350,vertex);
+                ctx.lineTo(175,base);
+                ctx.lineTo(145,base);
+                ctx.closePath();
+                ctx.fill();
+            } else if(method === 3) {
+                ctx.fillStyle = swap_color[2];
+                ctx.beginPath();
+                ctx.moveTo(200+(2*50),vertex);
+                ctx.lineTo(225+(2*50),base);
+                ctx.lineTo(175+(2*50),base);
+                ctx.closePath();
+                ctx.fill();
+
+                ctx.fillStyle = swap_color[1];
+                ctx.beginPath();
+                ctx.moveTo(200+(-1*50),vertex);
+                ctx.lineTo(225+(1*50),base);
+                ctx.lineTo(175+(1*50),base);
+                ctx.closePath();
+                ctx.fill();
+
+                ctx.fillStyle = swap_color[0];
+                ctx.beginPath();
+                ctx.moveTo(350,vertex);
+                ctx.lineTo(225,base);
+                ctx.lineTo(175,base);
+                ctx.closePath();
+                ctx.fill();
+
+                //すくった髪
+                ctx.fillStyle = swap_color[3];
+                ctx.beginPath();
+                ctx.moveTo(350,vertex);
+                ctx.lineTo(175,base);
+                ctx.lineTo(145,base);
+                ctx.closePath();
+                ctx.fill();
+
+                //すくう髪
+                ctx.fillStyle = swap_color[4];
+                ctx.beginPath();
+                ctx.moveTo(190+(3*50),vertex);
+                ctx.lineTo(205+(3*50),base);
+                ctx.lineTo(175+(3*50),base);
+                ctx.closePath();
+                ctx.fill();
+            } else {
+                ctx.fillStyle = swap_color[1];
+                ctx.beginPath();
+                ctx.moveTo(200+(-1*50),vertex);
+                ctx.lineTo(225+(1*50),base);
+                ctx.lineTo(175+(1*50),base);
+                ctx.closePath();
+                ctx.fill();
+
+                ctx.fillStyle = swap_color[0];
+                ctx.beginPath();
+                ctx.moveTo(350,vertex);
+                ctx.lineTo(225,base);
+                ctx.lineTo(175,base);
+                ctx.closePath();
+                ctx.fill();
+
+                ctx.fillStyle = swap_color[2];
+                ctx.beginPath();
+                ctx.moveTo(200+(-1*50),vertex);
+                ctx.lineTo(225+(2*50),base);
+                ctx.lineTo(175+(2*50),base);
+                ctx.closePath();
+                ctx.fill();
+
+                //すくった髪
+                ctx.fillStyle = swap_color[3];
+                ctx.beginPath();
+                ctx.moveTo(350,vertex);
+                ctx.lineTo(175,base);
+                ctx.lineTo(145,base);
+                ctx.closePath();
+                ctx.fill();
+
+                //すくう髪
+                ctx.fillStyle = swap_color[4];
+                ctx.beginPath();
+                ctx.moveTo(200+(-1*50),vertex);
+                ctx.lineTo(205+(3*50),base);
+                ctx.lineTo(175+(3*50),base);
+                ctx.closePath();
+                ctx.fill();
+            }
+            if(num < max) {
+                num++;
+                $timeout(function(){
+                    methodFrench(canvas, ctx, num, data, max, deferred);
+                }, interval);
+            } else {
+                deferred.resolve(true);
+            }
+        }
+
         function methodBraid(canvas, ctx, num, data, max, deferred) {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             var i = 0;
             var method = num%3;
             var img = new Image();
-            var three_colors = [];
             var vertex = 500 + num * 12;
-            var base = 100 + num * 12;
+            var base = (100 + num * 12) / data.heigh;
+            console.log(vertex);
             img.onload = function onImageLoad() {
                 ctx.drawImage(img, 30, canvas.height/3*2, canvas.width+30, canvas.height/3);
             };
@@ -217,11 +397,26 @@ angular.module("hairselfy").provider('guidelinePrvd', function() {
                 });
                 return deferred.promise;
             },
-            drawBraid: function(canvas, ctx, data) {
-                //thickness, heigh, hardness
+            drawFrench: function(canvas, ctx, data) {
+                //thickness, heigh, hardness, num
+                var braid_deferred = $q.defer();
                 var deferred = $q.defer();
+                var num = data.num;
                 swap_color = colors;
-                methodBraid(canvas, ctx, 0, data, 14, deferred);
+                methodBraid(canvas, ctx, 0, data, 3, braid_deferred);
+                braid_deferred.promise.then(function(response){
+                    methodFrench(canvas, ctx, 0, data, num, deferred);
+                }, function(response){
+                    deferred.reject(false);
+                });
+                return deferred.promise;
+            },
+            drawBraid: function(canvas, ctx, data) {
+                //thickness, heigh, hardness, num
+                var deferred = $q.defer();
+                var num = data.num;
+                swap_color = colors;
+                methodBraid(canvas, ctx, 0, data, num, deferred);
                 return deferred.promise;
             },
             drawGather: function(canvas, ctx, data) {
@@ -238,7 +433,14 @@ angular.module("hairselfy").provider('guidelinePrvd', function() {
                     };
                     img.src = img_path.Gather[data.direction];
                 } else {
-
+                    img.onload = function onImageLoad() {
+                        ctx.drawImage(img, 0, canvas.height/3*2, canvas.width, canvas.height/3);
+                        deferred.resolve(true);
+                    };
+                    img.onerror = function() {
+                        deferred.reject(false);
+                    };
+                    img.src = img_path.Gather[data.direction];
                 }
                 return deferred.promise;
             },

@@ -86,12 +86,13 @@ angular.module("hairselfy").controller('guidelineCtrl', function guidelineCtrl(c
     
     switch(data[process_num][guide_num].guide) {
       case "Turn":
-        promise = guidelinePrvd.drawTurn(ani_canvas, ani_ctx, data[process_num][guide_num].parameter);
+        promise = guidelinePrvd.drawTurn(canvas, ctx, data[process_num][guide_num].parameter);
         break;
       case "Twist":
-        promise = guidelinePrvd.drawTwist(ani_canvas, ani_ctx, data[process_num][guide_num].parameter);
+        promise = guidelinePrvd.drawTwist(canvas, ctx, data[process_num][guide_num].parameter);
         break;
       case "French":
+        promise = guidelinePrvd.drawFrench(ani_canvas, ani_ctx, data[process_num][guide_num].parameter);
         break;
       case "Braid":
         promise = guidelinePrvd.drawBraid(ani_canvas, ani_ctx, data[process_num][guide_num].parameter);
