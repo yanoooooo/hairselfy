@@ -220,31 +220,39 @@ angular.module("hairselfy").provider('guidelinePrvd', function() {
 
             if(method === 0) {
                 for(i=0; i<3; i++) {
-                    ctx.fillStyle = swap_color[i];
+                    ctx.lineWidth = 5;
+                    //ctx.fillStyle = swap_color[i];
+                    ctx.strokeStyle = swap_color[i];
                     ctx.beginPath();
                     ctx.moveTo(200+(i*50),vertex);
                     //座標を指定してラインを引いていく
                     ctx.lineTo(225+(i*50),base);
                     ctx.lineTo(175+(i*50),base);
                     ctx.closePath();
-                    ctx.fill();
+                    //ctx.fill();
+                    ctx.stroke();
                 }
             } else if(method === 1) {
-                ctx.fillStyle = swap_color[2];
+                ctx.lineWidth = 5;
+                //ctx.fillStyle = swap_color[2];
+                ctx.strokeStyle = swap_color[2];
                 ctx.beginPath();
                 ctx.moveTo(200+(2*50),vertex);
                 ctx.lineTo(225+(2*50),base);
                 ctx.lineTo(175+(2*50),base);
                 ctx.closePath();
-                ctx.fill();
+                //ctx.fill();
+                ctx.stroke();
 
-                ctx.fillStyle = swap_color[1];
+                //ctx.fillStyle = swap_color[1];
+                ctx.strokeStyle = swap_color[1];
                 ctx.beginPath();
                 ctx.moveTo(200+(-1*50),vertex);
                 ctx.lineTo(225+(1*50),base);
                 ctx.lineTo(175+(1*50),base);
                 ctx.closePath();
-                ctx.fill();
+                //ctx.fill();
+                ctx.stroke();
 
                 ctx.fillStyle = swap_color[0];
                 ctx.beginPath();
@@ -254,21 +262,26 @@ angular.module("hairselfy").provider('guidelinePrvd', function() {
                 ctx.closePath();
                 ctx.fill();
             } else {
-                ctx.fillStyle = swap_color[1];
+                ctx.lineWidth = 5;
+                //ctx.fillStyle = swap_color[1];
+                ctx.strokeStyle = swap_color[1];
                 ctx.beginPath();
                 ctx.moveTo(200+(-1*50),vertex);
                 ctx.lineTo(225+(1*50),base);
                 ctx.lineTo(175+(1*50),base);
                 ctx.closePath();
-                ctx.fill();
+                //ctx.fill();
+                ctx.stroke();
 
-                ctx.fillStyle = swap_color[0];
+                //ctx.fillStyle = swap_color[0];
+                ctx.strokeStyle = swap_color[0];
                 ctx.beginPath();
                 ctx.moveTo(350,vertex);
                 ctx.lineTo(225,base);
                 ctx.lineTo(175,base);
                 ctx.closePath();
-                ctx.fill();
+                //ctx.fill();
+                ctx.stroke();
 
                 ctx.fillStyle = swap_color[2];
                 ctx.beginPath();
@@ -311,7 +324,9 @@ angular.module("hairselfy").provider('guidelinePrvd', function() {
             img.src = hand_path;
 
             for(var i=0; i<data.num; i++) {
-                ctx.fillStyle = colors[i];
+                //ctx.fillStyle = colors[i];
+                ctx.lineWidth = 5;
+                ctx.strokeStyle = colors[i];
                 ctx.beginPath();
                 ctx.moveTo(start_vertex+(i*thickness*2)+(i*data.dist),500);
                 ctx.lineTo(start_vertex+thickness+(i*thickness*2)+(i*data.dist),100);
@@ -321,7 +336,8 @@ angular.module("hairselfy").provider('guidelinePrvd', function() {
                 ctx.lineTo(225+(i*50),100);
                 ctx.lineTo(175+(i*50),100);*/
                 ctx.closePath();
-                ctx.fill();
+                //ctx.fill();
+                ctx.stroke();
             }
             return deferred.promise;
         }
@@ -337,6 +353,8 @@ angular.module("hairselfy").provider('guidelinePrvd', function() {
             drawText: function(canvas, ctx, text) {
                 ctx.font = "20px 'ヒラギノ 角ゴ'";
                 /* 青色でstrokText */
+                ctx.fillStyle = "rgba(255, 255, 255, 0.9)";
+                ctx.fillRect(0, 0, canvas.width, 40);
                 ctx.fillStyle = "rgb(254, 168, 126)";
                 ctx.fillText(text, 30, 25);
             },
@@ -461,13 +479,16 @@ angular.module("hairselfy").provider('guidelinePrvd', function() {
                 var hand_position = {};
                 var img = new Image();
                 if(data.num == 1) {
-                    ctx.fillStyle = colors[0];
+                    ctx.lineWidth = 5;
+                    //ctx.fillStyle = colors[0];
+                    ctx.strokeStyle = colors[0];
                     ctx.beginPath();
                     ctx.moveTo(250, 600);
                     ctx.lineTo(300, 100);
                     ctx.lineTo(200, 100);
                     ctx.closePath();
-                    ctx.fill();
+                    //ctx.fill();
+                    ctx.stroke();
 
                     hand_position.x = 30;
                     hand_position.width = canvas.width+30;
