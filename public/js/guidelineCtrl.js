@@ -7,7 +7,7 @@ angular.module("hairselfy").controller('guidelineCtrl', function guidelineCtrl(c
   var camera_datas = common.camera;
   var pc_debug = true;
   var peer = new Peer({
-    host: '192.168.108.239',
+    host: '192.168.108.224',
     port: 9000,
     path: '/peerjs',
     debug: 3,
