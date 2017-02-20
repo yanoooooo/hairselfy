@@ -1,7 +1,19 @@
 doctype html
-html
+html(lang='ja', ng-app='hairselfy')
   head
     title= title
+    //script(src="/socket.io/socket.io.js", charset='UTF-8')
+    script(src="/lib/jquery/dist/jquery.min.js", charset='UTF-8')
+    script(src="/lib/peerjs/dist/peer.min.js", charset='UTF-8')
+    script(src="/lib/angular/angular.min.js", charset='UTF-8')
+    script(src="/js/common.js", charset='UTF-8')
+    script(src="/js/guidelinePrvd.js", charset='UTF-8')
+    script(src="/js/selectCtrl.js", charset='UTF-8')
+    script(src="/js/guidelineCtrl.js", charset='UTF-8')
+    link(rel='stylesheet', href='/lib/bootstrap/dist/css/bootstrap.min.css')
     link(rel='stylesheet', href='/css/common.css')
+    link(rel='stylesheet', href='/css/index.css')
+    link(rel='stylesheet', href='/css/select.css')
+    link(rel='stylesheet', href='/css/guideline.css')
   body
     block content
