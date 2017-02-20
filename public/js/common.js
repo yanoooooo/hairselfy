@@ -29,7 +29,7 @@ angular.module("hairselfy", []).value(
                 {src:'img/process/french/french6.png', text:'髪の毛を結びます', guide:"Tie", camera: "left", parameter:{}}
             ],
             'Braid':[
-                {src:'img/process/braid/braid1.png', text:'髪の毛を右側に寄せます', guide: "Gather", camera: "back", parameter:{}},
+                {src:'img/process/braid/braid1.png', text:'髪の毛を寄せます', guide: "Gather", camera: "back", parameter:{}},
                 {src:'img/process/braid/braid2.png', text:'寄せた髪を3束にわけます', guide: "Divide", camera: "right", parameter:{}},
                 {src:'img/process/braid/braid3.png', text:'髪の毛を編みます', guide:"Braid", camera: "right", parameter:{}},
                 {src:'img/process/braid/braid4.png', text:'髪の毛を結びます', guide:"Tie", camera: "right", parameter:{}}
@@ -38,7 +38,7 @@ angular.module("hairselfy", []).value(
         'braid_guide': {
             'Twist':{},
             'French':{},
-            'Braid':{thickness: 1.0, heigh: 1.0, hardness: 1.0, num:14},
+            'Braid':{thickness: 1.0, heigh: 1.0, hardness: 1.0, num:8},
             'Gather':{direction:'right'},
             'Divide':{num:3, center:250, dist:0, thickness: 1.0},
             'Tie': {position: 'bottom', num:1}
@@ -68,7 +68,7 @@ angular.module("hairselfy", []).value(
         'img_path': {
             'Turn': {hand: 'img/guide/turn/hand.png', arrow:'img/guide/turn/arrow.png'},
             'Twist': {hand: 'img/guide/twist/hand2.png', arrow:'img/guide/twist/twist_arrow2.png'},
-            'Gather': {right: 'img/guide/gather/right.png', left: 'img/guide/gather/left.png'},
+            'Gather': {right: 'img/guide/gather/left.png', left: 'img/guide/gather/right.png'},
             'Divide': {hand_many: 'img/guide/divide/hand_many.png', hand_less: 'img/guide/divide/hand_less.png'},
             'French': {hand: ['img/guide/braid/hand1.png', 'img/guide/braid/hand1.png', 'img/guide/braid/hand2.png', 'img/guide/braid/hand1.png', 'img/guide/braid/hand3.png']},
             'Braid': {hand: ['img/guide/braid/hand1.png', 'img/guide/braid/hand2.png', 'img/guide/braid/hand3.png']},
