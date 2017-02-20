@@ -1,0 +1,44 @@
+extends layout
+
+block content
+    div(id="guideline" ng-controller="guidelineCtrl as vm" ng-init="vm.init('#{ua}','#{room_id}', '#{datas}');")
+        #pc.row(ng-if="vm.user_agent=='pc'")
+            #left.col-sm-3
+                .process(ng-repeat="process in vm.process_datas")
+                    div(ng-repeat="data in process")
+                        img(ng-src="{{data.src}}" id="icon_{{$parent.$index}}_{{$index}}")
+                        //br
+                        //| {{data.text}}
+                        .arrow
+                    div
+                        img(ng-src="img/guide/finish/finish_icon.png" id="icon_finish")
+            #right.col-sm-9
+                br
+                | ID :
+                span#id
+                br
+                br
+                #display
+                    .row(style="height:100%;")
+                        .col-md-5(style="height:100%;")
+                            #peer-camera.camera
+                                video(autoplay)
+                                canvas(id="draw_guide")
+                                canvas(id="animation")
+                        .col-md-7(style="height:100%;")
+                            #pcVideo
+                                video(autoplay)
+                            #servo
+                                p Servo Controller
+                                center
+                                    input(class="form-control" type="text" placeholder="Input Angle of rotation" id="example-text-input" ng-model="vm.rot_data" ng-pattern="/^(0|[1-9][0-9]*)$/")
+                                br
+                                button(type="button" class="btn" ng-click="vm.sendServo()" ng-disabled="!vm.rot_data") Send
+                                button(type="button" class="btn" ng-click="vm.draw()") draw
+                                br
+                                br
+                                a(type="button" class="btn" href="/") Restart
+        div(id="sp" ng-if="vm.user_agent=='sp'")
+            //button(id="login" ng-click="vm.connect()") Connect
+            div(id="spVideo")
+                video(autoplay)

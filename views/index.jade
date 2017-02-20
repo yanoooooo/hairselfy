@@ -1,5 +1,17 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+    #index
+        h1 hair selfy
+        p ヘアアレンジのモードを選択してください
+        .row
+            .col-sm-6.hair
+                a(href="/select?mode=free")
+                    img(src="img/index/free.png")
+                br
+                | 自由モード
+            .col-sm-6.hair
+                a(href="/select?mode=template")
+                    img(src="img/index/template.png")
+                br
+                | 雛形モード
