@@ -1,7 +1,7 @@
 angular.module("hairselfy").provider('guidelinePrvd', function() {
     var vm = this;
     var canvas, ctx;
-    var interval = 1000;
+    var interval = 20000;
     var camera_data, img_path;
     var colors = [
         "rgba(255, 184, 213, 0.7)",
@@ -39,25 +39,29 @@ angular.module("hairselfy").provider('guidelinePrvd', function() {
 
             if(method === 0) {
                 for(i=0; i<3; i++) {
-                    ctx.fillStyle = swap_color[i];
+                    ctx.strokeStyle = swap_color[i];
+                    //ctx.fillStyle = swap_color[i];
                     ctx.beginPath();
                     ctx.moveTo(200+(i*50),vertex);
                     //座標を指定してラインを引いていく
                     ctx.lineTo(225+(i*50),base);
                     ctx.lineTo(175+(i*50),base);
                     ctx.closePath();
-                    ctx.fill();
+                    //ctx.fill();
+                    ctx.stroke();
                 }
             } else if(method === 1) {
                 for(i=0; i<3; i++) {
-                    ctx.fillStyle = swap_color[i];
+                    ctx.strokeStyle = swap_color[i];
+                    //ctx.fillStyle = swap_color[i];
                     ctx.beginPath();
                     ctx.moveTo(200+(i*50),vertex);
                     //座標を指定してラインを引いていく
                     ctx.lineTo(225+(i*50),base);
                     ctx.lineTo(175+(i*50),base);
                     ctx.closePath();
-                    ctx.fill();
+                    //ctx.fill();
+                    ctx.stroke();
                 }
 
                 //すくう髪
@@ -69,22 +73,27 @@ angular.module("hairselfy").provider('guidelinePrvd', function() {
                 ctx.closePath();
                 ctx.fill();
             } else if(method === 2) {
-                ctx.fillStyle = swap_color[2];
+                ctx.strokeStyle = swap_color[2];
+                //ctx.fillStyle = swap_color[2];
                 ctx.beginPath();
                 ctx.moveTo(200+(2*50),vertex);
                 ctx.lineTo(225+(2*50),base);
                 ctx.lineTo(175+(2*50),base);
                 ctx.closePath();
-                ctx.fill();
+                //ctx.fill();
+                ctx.stroke();
 
-                ctx.fillStyle = swap_color[1];
+                ctx.strokeStyle = swap_color[1];
+                //ctx.fillStyle = swap_color[1];
                 ctx.beginPath();
                 ctx.moveTo(200+(-1*50),vertex);
                 ctx.lineTo(225+(1*50),base);
                 ctx.lineTo(175+(1*50),base);
                 ctx.closePath();
-                ctx.fill();
+                //ctx.fill();
+                ctx.stroke();
 
+                //ctx.strokeStyle = swap_color[0];
                 ctx.fillStyle = swap_color[0];
                 ctx.beginPath();
                 ctx.moveTo(350,vertex);
@@ -92,6 +101,7 @@ angular.module("hairselfy").provider('guidelinePrvd', function() {
                 ctx.lineTo(175,base);
                 ctx.closePath();
                 ctx.fill();
+                //ctx.stroke();
 
                 //すくう髪
                 ctx.fillStyle = swap_color[3];
@@ -102,38 +112,46 @@ angular.module("hairselfy").provider('guidelinePrvd', function() {
                 ctx.closePath();
                 ctx.fill();
             } else if(method === 3) {
-                ctx.fillStyle = swap_color[2];
+                ctx.strokeStyle = swap_color[2];
+                //ctx.fillStyle = swap_color[2];
                 ctx.beginPath();
                 ctx.moveTo(200+(2*50),vertex);
                 ctx.lineTo(225+(2*50),base);
                 ctx.lineTo(175+(2*50),base);
                 ctx.closePath();
-                ctx.fill();
+                ctx.stroke();
+                //ctx.fill();
 
-                ctx.fillStyle = swap_color[1];
+                ctx.strokeStyle = swap_color[1];
+                //ctx.fillStyle = swap_color[1];
                 ctx.beginPath();
                 ctx.moveTo(200+(-1*50),vertex);
                 ctx.lineTo(225+(1*50),base);
                 ctx.lineTo(175+(1*50),base);
                 ctx.closePath();
-                ctx.fill();
+                ctx.stroke();
+                //ctx.fill();
 
-                ctx.fillStyle = swap_color[0];
+                ctx.strokeStyle = swap_color[0];
+                //ctx.fillStyle = swap_color[0];
                 ctx.beginPath();
                 ctx.moveTo(350,vertex);
                 ctx.lineTo(225,base);
                 ctx.lineTo(175,base);
                 ctx.closePath();
-                ctx.fill();
+                ctx.stroke();
+                //ctx.fill();
 
                 //すくった髪
-                ctx.fillStyle = swap_color[3];
+                ctx.strokeStyle = swap_color[3];
+                //ctx.fillStyle = swap_color[3];
                 ctx.beginPath();
                 ctx.moveTo(350,vertex);
                 ctx.lineTo(175,base);
                 ctx.lineTo(145,base);
                 ctx.closePath();
-                ctx.fill();
+                ctx.stroke();
+                //ctx.fill();
 
                 //すくう髪
                 ctx.fillStyle = swap_color[4];
@@ -144,38 +162,46 @@ angular.module("hairselfy").provider('guidelinePrvd', function() {
                 ctx.closePath();
                 ctx.fill();
             } else {
-                ctx.fillStyle = swap_color[1];
+                ctx.strokeStyle = swap_color[1];
+                //ctx.fillStyle = swap_color[1];
                 ctx.beginPath();
                 ctx.moveTo(200+(-1*50),vertex);
                 ctx.lineTo(225+(1*50),base);
                 ctx.lineTo(175+(1*50),base);
                 ctx.closePath();
-                ctx.fill();
+                ctx.stroke();
+                //ctx.fill();
 
-                ctx.fillStyle = swap_color[0];
+                ctx.strokeStyle = swap_color[0];
+                //ctx.fillStyle = swap_color[0];
                 ctx.beginPath();
                 ctx.moveTo(350,vertex);
                 ctx.lineTo(225,base);
                 ctx.lineTo(175,base);
                 ctx.closePath();
-                ctx.fill();
+                ctx.stroke();
+                //ctx.fill();
 
+                //ctx.strokeStyle = swap_color[2];
                 ctx.fillStyle = swap_color[2];
                 ctx.beginPath();
                 ctx.moveTo(200+(-1*50),vertex);
                 ctx.lineTo(225+(2*50),base);
                 ctx.lineTo(175+(2*50),base);
                 ctx.closePath();
+                //ctx.stroke();
                 ctx.fill();
 
                 //すくった髪
-                ctx.fillStyle = swap_color[3];
+                ctx.strokeStyle = swap_color[3];
+                //ctx.fillStyle = swap_color[3];
                 ctx.beginPath();
                 ctx.moveTo(350,vertex);
                 ctx.lineTo(175,base);
                 ctx.lineTo(145,base);
                 ctx.closePath();
-                ctx.fill();
+                ctx.stroke();
+                //ctx.fill();
 
                 //すくう髪
                 ctx.fillStyle = swap_color[4];

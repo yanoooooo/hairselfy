@@ -1,13 +1,14 @@
 //渡されたヘアアレンジの種類とパラメータを描画する
 angular.module("hairselfy").controller('guidelineCtrl', function guidelineCtrl(common, guidelinePrvd, $timeout, $location, $anchorScroll) {
   var vm = this;
-  var interval = 1000;
+  var interval = 10000;
   var conn;
   var process_datas = [];
   var camera_datas = common.camera;
-  var pc_debug = true;
+  var pc_debug = false;
   var peer = new Peer({
-    host: '192.168.108.224',
+    //host: '192.168.108.224',
+    host: '192.168.0.95',
     port: 9000,
     path: '/peerjs',
     debug: 3,
